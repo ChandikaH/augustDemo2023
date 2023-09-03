@@ -33,3 +33,28 @@ else
 {
     Console.WriteLine("User hasn't been logged in.");
 }
+
+// Create a new time record
+
+// Navigate to time and Material module
+IWebElement administrationDropdown = driver.FindElement(By.XPath(""));
+administrationDropdown.Click();
+
+IWebElement tmOption = driver.FindElement(By.XPath(""));
+tmOption.Click();
+
+// Click on create new button
+IWebElement createNewButton = driver.FindElement(By.XPath(""));
+createNewButton.Click();
+
+// Select Time from dropdown
+
+// Enter code
+
+// Enter description
+
+// Enter the price (don’t worry about the file selector for now)
+
+// Click on save button
+
+// Check if new time record has been created successfully
