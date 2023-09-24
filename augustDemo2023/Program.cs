@@ -37,24 +37,53 @@ else
 // Create a new time record
 
 // Navigate to time and Material module
-IWebElement administrationDropdown = driver.FindElement(By.XPath(""));
+IWebElement administrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a/span"));
 administrationDropdown.Click();
 
-IWebElement tmOption = driver.FindElement(By.XPath(""));
+IWebElement tmOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
 tmOption.Click();
 
 // Click on create new button
-IWebElement createNewButton = driver.FindElement(By.XPath(""));
+IWebElement createNewButton = driver.FindElement(By.XPath("//a[@class='btn btn-primary']"));
 createNewButton.Click();
 
 // Select Time from dropdown
+IWebElement typeCodeDropdown = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[2]/span"));
+typeCodeDropdown.Click();
+
+IWebElement timeTypeCode = driver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[2]"));
+timeTypeCode.Click();
 
 // Enter code
+IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
+codeTextbox.SendKeys("September2023");
 
 // Enter description
+IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
+descriptionTextbox.SendKeys("September2023");
 
-// Enter the price (don’t worry about the file selector for now)
+// Enter the price (Note:don’t worry about the file selector for now)
+IWebElement priceTextbox = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
+priceTextbox.SendKeys("12");
 
 // Click on save button
+IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
+saveButton.Click();
+//Note:Save the code and run to check the code is working correctly
+//Delete the created record manually for teaching purposes
+
+Thread.Sleep(5000);
 
 // Check if new time record has been created successfully
+IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+goToLastPageButton.Click();
+
+IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+if (newCode.Text == "September2023")
+{
+    Console.WriteLine("New Time Record has been created successfully");
+}
+else
+{
+    Console.WriteLine("Time Record has not been created");
+}
