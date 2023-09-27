@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-
 //Open Chrome browser
 IWebDriver driver = new ChromeDriver();
 //maximize the browser
@@ -34,7 +33,7 @@ else
     Console.WriteLine("User hasn't been logged in.");
 }
 
-// Create a new time record
+//======================================Create a new time record====================================================
 
 // Navigate to time and Material module
 IWebElement administrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a/span"));
@@ -86,4 +85,75 @@ if (newCode.Text == "September2023")
 else
 {
     Console.WriteLine("Time Record has not been created");
+}
+
+//======================================Edit added record====================================================
+
+goToLastPageButton.Click();
+Thread.Sleep(3000);
+
+//Click on Edit Button
+IWebElement editButton = driver.FindElement(By.XPath("//tbody/tr[last()]/td[5]/a[1]"));
+editButton.Click();
+Thread.Sleep(3000);
+
+//Edit Code in Code Textbox
+IWebElement editCodeTextbox = driver.FindElement(By.Id("Code"));
+editCodeTextbox.Clear();
+editCodeTextbox.SendKeys("IC2023Edited");
+
+//Edit Description in Description Textbox
+IWebElement editDescriptionTextBox = driver.FindElement(By.Id("Description"));
+editDescriptionTextBox.Clear();
+editDescriptionTextBox.SendKeys("IC2023Edited");
+
+//Edit Price in Price Textbox
+IWebElement editPriceOverlappingTag = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
+IWebElement editPriceTextBox = driver.FindElement(By.Id("Price"));
+editPriceOverlappingTag.Click();
+editPriceTextBox.Clear();
+editPriceOverlappingTag.Click();
+editPriceTextBox.SendKeys("500");
+
+//Click on save button
+IWebElement editSaveButton = driver.FindElement(By.Id("SaveButton"));
+editSaveButton.Click();
+Thread.Sleep(7000);
+
+// Clock on goToLastPage Button
+IWebElement editGoToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+editGoToLastPageButton.Click();
+
+IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+IWebElement EditedDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+
+if (editedCode.Text == "IC2023Edited" && EditedDescription.Text == "IC2023Edited")
+{
+    Console.WriteLine("Time Record has been updated successfully");
+}
+else
+{
+    Console.WriteLine("Time Record has not been updated");
+}
+
+//======================================Delete added record====================================================
+
+goToLastPageButton.Click();
+Thread.Sleep(3000);
+
+//Click on delete button
+IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+deleteButton.Click();
+
+IAlert simpleAlert = driver.SwitchTo().Alert();
+simpleAlert.Accept();
+
+IWebElement lastCodeInTable = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+if (lastCodeInTable.Text != "IC2023Edited")
+{
+    Console.WriteLine("Time Record has been deleted successfully");
+}
+else
+{
+    Console.WriteLine("Time Record has not been deleted");
 }
